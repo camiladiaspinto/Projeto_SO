@@ -30,23 +30,20 @@ int merge4(int fi[4], int fo) {
     //criar os filhos
     pid1 = fork();
        if (pid1 == 0) { // processo filho 1
-       //fecha descritor de leitura
+        //fecha descritor de leitura
         close(fd1[0]);
-
-  
-
+        //redireciona a saída padrão para o pipe 
         dup2(fd1[1], STDOUT_FILENO);
 
         //ordenar os fragmentos, este merge foi testado e esta a dar certo 
 
         merge2(fi[0], fi[1], STDOUT_FILENO);
-
-        
-
+        //fechar descritor que nao estão a ser usados
         close(fd1[1]);
         close(fd2[0]);
         close(fd2[1]);
         exit(0);
+
     } else {
         pid2 = fork();
         if (pid2 == 0) { // processo filho 2
@@ -54,24 +51,27 @@ int merge4(int fi[4], int fo) {
             // Redireciona a saída padrão para o pipe
             dup2(fd2[1], STDOUT_FILENO);
 
-            //este merge foi testado, mas nao esta a dar certo 
+            //ordenar os fragmentos, este merge foi testado e esta a dar certo 
             merge2(fi[2], fi[3], STDOUT_FILENO);
-
+            //fechar descritor que nao estão a ser usados
             close(fd2[1]);
             close(fd1[0]);
             close(fd1[1]);
             exit(0);
         } else { // processo pai
+            //fechar descritor que nao estão a ser usados
             close(fd1[1]);
             close(fd2[1]);
 
+            //ordenar os resultados intermédios, obtidos dos filhos e meter no file de saída
             merge2(fd1[0], fd2[0], fo);
 
-
+            //fehcar os descritores e o ficheiro
             close(fd1[0]);
             close(fd2[0]);
             close(fo);
 
+            //espera pelos filhos
             wait(NULL);
             wait(NULL);
             return 0;
