@@ -37,7 +37,7 @@ int merge4(int fi[4], int fo) {
 
         //ordenar os fragmentos, este merge foi testado e esta a dar certo 
 
-        merge2(fi[0], fi[1], STDOUT_FILENO);
+        merge2(fi[0], fi[1], fo);
         //fechar descritor que nao estão a ser usados
         close(fd1[1]);
         close(fd2[0]);
@@ -52,7 +52,7 @@ int merge4(int fi[4], int fo) {
             dup2(fd2[1], STDOUT_FILENO);
 
             //ordenar os fragmentos, este merge foi testado e esta a dar certo 
-            merge2(fi[2], fi[3], STDOUT_FILENO);
+            merge2(fi[2], fi[3], fo);
             //fechar descritor que nao estão a ser usados
             close(fd2[1]);
             close(fd1[0]);
@@ -79,14 +79,10 @@ int merge4(int fi[4], int fo) {
     }
 }
 
-int main() {
-    int fi[4];
-    int fo;
-    fo = open("output2.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);    
+//int main() {
+  //  int fi[4];
+   // int fo;
+    //fo = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);    
     
-    merge4(fi, fo);
-
-
-
-    return 0;
-}
+    //merge4(fi, fo);
+//}

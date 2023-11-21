@@ -81,8 +81,8 @@ int merge2(int fi1, int fi2, int fo) {
     return 0;
 }
 //int main() {
-  //  int fd1 = open("teste1.txt", O_RDONLY);
-    //int fd2 = open("teste2.txt", O_RDONLY);
+  //  int fd1 = open("f3.txt", O_RDONLY);
+    //int fd2 = open("f4.txt", O_RDONLY);
     //int fo=open("r.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 
     //merge2(fd1,fd2,fo);
