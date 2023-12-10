@@ -1,5 +1,5 @@
-#ifndef MERGE2_H
-#define MERGE2_H
+#ifndef MERGE4_H
+#define MERGE4_H
 
 int merge4(int fi[4], int fo);
 

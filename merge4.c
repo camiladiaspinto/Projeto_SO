@@ -12,7 +12,7 @@ int merge4(int fi[4], int fo) {
     fi[2] = open("f3.txt", O_RDONLY);
     fi[3] = open("f4.txt", O_RDONLY);
     //verifica se os ficheiros de entrada foram abertos corretamente
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; i++) {
         if (fi[i] == -1) {
             perror("Erro ao abrir um dos ficheiros de entrada");
             exit(EXIT_FAILURE);
@@ -37,8 +37,8 @@ int merge4(int fi[4], int fo) {
 
         //ordenar os fragmentos, este merge foi testado e esta a dar certo 
 
-        merge2(fi[0], fi[1], fo);
-        //fechar descritor que nao estão a ser usados
+        merge2(fi[0], fi[1], STDOUT_FILENO);
+        //fechar descritores que nao estão a ser usados
         close(fd1[1]);
         close(fd2[0]);
         close(fd2[1]);
@@ -51,15 +51,15 @@ int merge4(int fi[4], int fo) {
             // Redireciona a saída padrão para o pipe
             dup2(fd2[1], STDOUT_FILENO);
 
-            //ordenar os fragmentos, este merge foi testado e esta a dar certo 
-            merge2(fi[2], fi[3], fo);
-            //fechar descritor que nao estão a ser usados
+            //ordenar os fragmentos
+            merge2(fi[2], fi[3], STDOUT_FILENO);
+            //fechar descritores que nao estão a ser usados
             close(fd2[1]);
             close(fd1[0]);
             close(fd1[1]);
             exit(0);
         } else { // processo pai
-            //fechar descritor que nao estão a ser usados
+            //fechar descritores que nao estão a ser usados
             close(fd1[1]);
             close(fd2[1]);
 
@@ -78,11 +78,10 @@ int merge4(int fi[4], int fo) {
         }
     }
 }
-
-//int main() {
-  //  int fi[4];
-   // int fo;
-    //fo = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);    
+/*int main() {
+   int fi[4];
+   int fo;
+   fo = open("output.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);    
     
-    //merge4(fi, fo);
-//}
+    merge4(fi, fo);
+}*/
